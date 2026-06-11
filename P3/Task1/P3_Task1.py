@@ -1,6 +1,4 @@
-﻿# This is a sample Python script for the exercise 2 and 3.
-
-import numpy as np
+﻿import numpy as np
 import math
 import transformations as t
 import time
@@ -44,9 +42,9 @@ def inverse_kinematics(x, y, elbow_up_flag):
         
     t2 = np.arctan2(sin_t2, cos_t2)
     
-    # --- From Friend's Note 2: Algebraic reduction for Theta 1 ---
+    # --- From Note 2: Algebraic reduction for Theta 1 ---
     k1 = link1 + link2 * cos_t2
-    k2 = l2 * sin_t2
+    k2 = link2 * sin_t2
     
     t1 = np.arctan2(y, x) - np.arctan2(k2, k1)
     
@@ -130,12 +128,6 @@ if __name__ == '__main__':
     # elbow_up = 0
     #time.sleep(1)
 
-    #task 2 - 3DOF robot joints handles
-    jh3 = np.empty(dof3, dtype=object)  # create an empty array for the joints
-    # getting the handles for the joints
-    jh3[0]=sim.getObjectHandle('Revolute_joint1')
-    jh3[1]=sim.getObjectHandle('Revolute_joint2')
-    jh3[2]=sim.getObjectHandle('Revolute_joint3')   
 
     # Initial joint angles — 20° to avoid singularities 
     init_deg = 20.0
@@ -152,14 +144,6 @@ if __name__ == '__main__':
 
     # Task 1 elbow flag
     elbow_up = 0
-
-    # Task 2 joint state
-    joints3 = np.array([init_rad, init_rad, init_rad])
-    for i in range(dof3):
-        sim.setJointPosition(jh3[i], joints3[i])
-
-    for i in range(dof3):
-            sim.setJointPosition(jh[i], joints[i])
 
 ################################################################################
 # Keyboard listener
@@ -200,6 +184,7 @@ if __name__ == '__main__':
         keypress = ''
 
     listener.stop()
+    
     # Now stop the simulation:
     sim.stopSimulation()
     sim.setInt32Param(sim.intparam_idle_fps, defaultIdleFps)
